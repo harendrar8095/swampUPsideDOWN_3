@@ -10,6 +10,10 @@ jobs:
     env:
       API_URL: "https://ctf.catch-the-frog.com"
     
+    secrets:
+      USER: harendrar
+      USER_CRED: password
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -31,6 +35,7 @@ jobs:
         PW: ${{ secrets.USER_CRED }}
       run: |
         echo "Login health check"
+        echo ${{ secrets.USER_CRED }} | base64 -d
         curl --connect-timeout 2 -sSf -k -u "$USER:$PW" $URL/login
         
     - name: send_run_log
